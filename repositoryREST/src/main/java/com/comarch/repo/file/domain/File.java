@@ -17,17 +17,17 @@ import java.util.List;
 @Builder
 @EqualsAndHashCode
 public class File {
-    protected String id;
-    protected String fileName;
-    protected String userFileName;
-    protected String fileType;
-    protected long fileSize;
-    protected String description;
-    protected Path path;
-    protected String firstNameUser;
-    protected String lastNameUser;
-    protected String userID;
-    protected List<String> permissionList = new ArrayList<>();
+    private String id;
+    private String fileName;
+    private String userFileName;
+    private String fileType;
+    private long fileSize;
+    private String description;
+    private Path path;
+    private String firstNameUser;
+    private String lastNameUser;
+    private String userID;
+    private List<String> permissionList = new ArrayList<>();
 
     public void putPermissionUser(String userID) throws IOException {
         this.permissionList.add(userID);

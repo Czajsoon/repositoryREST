@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 
-@CrossOrigin("http://localhost:4200/")
+@CrossOrigin("*")
 @RestController
 @Slf4j
 public class FilePutController {
@@ -30,9 +30,10 @@ public class FilePutController {
     }
 
     @PutMapping(value = "/giveAccessToFolder")
-    public ResponseEntity<String> permissionAccessToFolder(@RequestParam("directory") String directory,
-                                                   @RequestParam("userID") String userID){
+    public ResponseEntity<Boolean> permissionAccessToFolder(@RequestParam("directory") String directory,
+                                                           @RequestParam("userID") String userID,
+                                                           @RequestParam("ownerID") String ownerID) throws IOException {
 
-        return null;
+        return ResponseEntity.ok().body(fileServiceInterface.givePermissionForFolder(directory,userID,ownerID));
     }
 }

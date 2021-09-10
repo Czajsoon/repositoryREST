@@ -19,6 +19,7 @@ public class PostFileService {
             FileConfig fileConfig
     ){
         fileConfig.setDescription(fileConfig.getDescription().isEmpty() ? "None" : fileConfig.getDescription());
+        fileConfig.setFormat(fileConfig.getFormat() == null ? file.getContentType() : fileConfig.getFormat());
         File addedFile = fileServiceInterface.storeFile(file,fileConfig);
         log.info("POST: " + addedFile);
         return addedFile;

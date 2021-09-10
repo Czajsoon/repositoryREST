@@ -84,6 +84,5 @@ public class InMemoryRepositoryUsers implements InMemoryRepositoryUsersInterface
     @PostConstruct
     public void init() throws IOException {
         usersList = ReadUserConfig.readUsers();
-        System.out.println(usersList);
     }
 }

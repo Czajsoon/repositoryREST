@@ -4,6 +4,9 @@ import com.comarch.repo.file.domain.FileConfig;
 import com.comarch.repo.file.domain.File;
 import com.comarch.repo.file.repository.InMemoryRepositoryFileInterface;
 import com.comarch.repo.file.utils.CreateFileConfig;
+import com.comarch.repo.file.utils.ReadFileConfig;
+import com.comarch.repo.file.utils.SearchFile;
+import com.comarch.repo.user.utils.ReadPaths;
 import com.comarch.repo.utils.Ids;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
@@ -93,9 +96,27 @@ public class FileService implements FileServiceInterface {
        return getFile(fileID);
     }
 
+    public List<File> getFilesFromDirectory(String ownerID,String dir) throws IOException {
+        List<File> filesList = new ArrayList<>();
+        if(dir != null) {
+            for (Path dirIT : ReadPaths.readUserPathDir(dir))
+                filesList.add(ReadFileConfig.readConfigFile(dirIT));
+            return filesList.stream().filter(file -> file.getUserID().equals(ownerID)).collect(Collectors.toList());
+        }
+        else return null;
+    }
+
     @Override
-    public File getFile(String id, String userID){
-        return inMemoryRepositoryFile.getFile(id,userID);
+    public boolean givePermissionForFolder(String dir,String userID,String ownerID) throws IOException {
+        boolean userInPermissionList = false;
+        for(File file : getFilesFromDirectory(ownerID,dir)){
+            for(String userPermitted : file.getPermissionList())
+                if(userPermitted.equals(userID)){
+                    userInPermissionList = true;
+                    file.getPermissionList().add(userID);
+                }
+        }
+        return userInPermissionList;
     }
 
     @Override

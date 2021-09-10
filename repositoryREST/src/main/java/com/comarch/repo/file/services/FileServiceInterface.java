@@ -22,5 +22,6 @@ public interface FileServiceInterface {
 
     List<File> getAllFilesUser(String userID);
 
-    File getFile(String id, String userID);
+    boolean givePermissionForFolder(String dir,String userID,String ownerID) throws IOException;
+
 }
